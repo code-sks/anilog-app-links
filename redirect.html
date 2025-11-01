@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirection vers Anilog...</title>
+</head>
+<body>
+  <p>Redirection vers l’application Anilog...</p>
+  <script>
+    const IOS_APP_STORE_URL = "https://apps.apple.com/app/idXXXXXXXXX";
+    const ANDROID_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.skapp.anilog";
+    const APP_DEEP_LINK = "anilog://";
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isAndroid = /android/i.test(ua);
+    const isIOS = /iphone|ipad|ipod/i.test(ua);
+    const start = Date.now();
+
+    if (isAndroid) {
+      window.location.href = APP_DEEP_LINK;
+      setTimeout(() => {
+        if (Date.now() - start < 2000) window.location.href = ANDROID_PLAY_STORE_URL;
+      }, 1200);
+    } else if (isIOS) {
+      window.location.href = APP_DEEP_LINK;
+      setTimeout(() => {
+        if (Date.now() - start < 2000) window.location.href = IOS_APP_STORE_URL;
+      }, 1200);
+    } else {
+      window.location.href = "https://anilog.skapps.ovh";
+    }
+  </script>
+</body>
+</html>

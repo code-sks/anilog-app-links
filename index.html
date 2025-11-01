@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anilog - Ouvrir l’application</title>
+  <meta name="description" content="Ouvrez ou téléchargez l’application Anilog, le carnet connecté pour vos animaux.">
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #fafafa;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 1rem;
+      max-width: 400px;
+    }
+    .buttons {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    a.button {
+      background: #007aff;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    a.button:hover {
+      background: #005fd1;
+    }
+    .loader {
+      margin-top: 3rem;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #ddd;
+      border-top-color: #007aff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    footer {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Anilog 🐾</h1>
+  <p>Votre compagnon intelligent pour suivre la santé et les activités de vos animaux.</p>
+
+  <div class="buttons">
+    <a id="open-app" class="button" href="#">Ouvrir l’application</a>
+    <a id="app-store" class="button" href="https://apps.apple.com/app/idXXXXXXXXX">App Store</a>
+    <a id="play-store" class="button" href="https://play.google.com/store/apps/details?id=com.skapp.anilog">Google Play</a>
+  </div>
+
+  <div class="loader"></div>
+  <footer>© 2025 Skapps — Tous droits réservés</footer>
+
+  <script>
+    const IOS_APP_STORE_URL = "https://apps.apple.com/app/idXXXXXXXXX"; // Remplace par ton vrai ID App Store
+    const ANDROID_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.skapp.anilog";
+    const APP_DEEP_LINK = "anilog://"; // ton scheme Expo
+    const FALLBACK_WEB_URL = "https://anilog.skapps.ovh";
+
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isAndroid = /android/i.test(ua);
+    const isIOS = /iphone|ipad|ipod/i.test(ua);
+
+    function openApp() {
+      const start = Date.now();
+      if (isAndroid) {
+        window.location.href = APP_DEEP_LINK;
+        setTimeout(() => {
+          if (Date.now() - start < 2000) window.location.href = ANDROID_PLAY_STORE_URL;
+        }, 1200);
+      } else if (isIOS) {
+        window.location.href = APP_DEEP_LINK;
+        setTimeout(() => {
+          if (Date.now() - start < 2000) window.location.href = IOS_APP_STORE_URL;
+        }, 1200);
+      }
+    }
+
+    window.onload = openApp;
+    document.getElementById("open-app").addEventListener("click", (e) => {
+      e.preventDefault();
+      openApp();
+    });
+  </script>
+</body>
+</html>
